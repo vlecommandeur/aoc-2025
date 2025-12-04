@@ -1,4 +1,4 @@
-const { parseRanges } = require("../parser");
+import { parseRanges } from "../parser.js";
 
 const rangeValues = parseRanges("day2/input.txt");
 
@@ -7,6 +7,7 @@ const filteredRangeValues = rangeValues.filter(
 );
 
 let invalidIds = 0;
+
 filteredRangeValues.forEach((value) => {
   const str = value.toString();
   const mid = str.length / 2;

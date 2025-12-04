@@ -1,4 +1,4 @@
-const { parseInput } = require("../parser");
+import { parseInput } from "../parser.js";
 
 const directions = parseInput("day1/input.txt");
 let zeros = 0;

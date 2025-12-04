@@ -1,5 +1,8 @@
-const fs = require("fs");
-const path = require("path");
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const parseInput = (inputFile) => {
   const inputPath = path.join(__dirname, inputFile);
@@ -24,9 +27,11 @@ const parseRanges = (inputFile) => {
     const data = fs.readFileSync(inputPath, "utf-8");
     const ranges = data.trim().split(",");
 
-    return ranges.map((el) =>
-      fillArrayRange(parseInt(el.split("-")[0]), parseInt(el.split("-")[1]))
-    ).flat();
+    return ranges
+      .map((el) =>
+        fillArrayRange(parseInt(el.split("-")[0]), parseInt(el.split("-")[1]))
+      )
+      .flat();
   } catch (error) {
     console.error("Error reading input file:", error);
     return [];
@@ -38,4 +43,4 @@ const fillArrayRange = (n, m) => {
   return Array.from({ length }, (_, index) => n + index);
 };
 
-module.exports = { parseInput, parseRanges };
+export { parseInput, parseRanges };
