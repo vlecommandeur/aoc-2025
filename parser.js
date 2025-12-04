@@ -17,4 +17,25 @@ const parseInput = (inputFile) => {
   }
 };
 
-module.exports = { parseInput };
+const parseRanges = (inputFile) => {
+  const inputPath = path.join(__dirname, inputFile);
+
+  try {
+    const data = fs.readFileSync(inputPath, "utf-8");
+    const ranges = data.trim().split(",");
+
+    return ranges.map((el) =>
+      fillArrayRange(parseInt(el.split("-")[0]), parseInt(el.split("-")[1]))
+    ).flat();
+  } catch (error) {
+    console.error("Error reading input file:", error);
+    return [];
+  }
+};
+
+const fillArrayRange = (n, m) => {
+  const length = m - n + 1;
+  return Array.from({ length }, (_, index) => n + index);
+};
+
+module.exports = { parseInput, parseRanges };
