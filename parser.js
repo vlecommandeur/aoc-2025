@@ -38,9 +38,40 @@ const parseRanges = (inputFile) => {
   }
 };
 
+const parseIngredients = (inputFile) => {
+  const inputPath = path.join(__dirname, inputFile);
+
+  try {
+    const data = fs.readFileSync(inputPath, "utf8");
+    const lines = data.trim().split("\n");
+
+    const emptyLineIndex = lines.findIndex((line) => line.trim() === "");
+
+    const rangeLines = lines.slice(0, emptyLineIndex);
+    const freshIngredientRanges = rangeLines.map((line) => {
+      const [start, end] = line.split("-").map((num) => parseInt(num));
+      return [start, end];
+    });
+
+    const idLines = lines.slice(emptyLineIndex + 1);
+    const availableIngredientIDs = idLines.map((line) => parseInt(line.trim()));
+
+    return {
+      freshIngredientRanges,
+      availableIngredientIDs,
+    };
+  } catch (error) {
+    console.error("Error reading input file:", error);
+    return {
+      freshIngredientRanges: [],
+      availableIngredientIDs: [],
+    };
+  }
+};
+
 const fillArrayRange = (n, m) => {
   const length = m - n + 1;
   return Array.from({ length }, (_, index) => n + index);
 };
 
-export { parseInput, parseRanges };
+export { parseInput, parseRanges, parseIngredients };
